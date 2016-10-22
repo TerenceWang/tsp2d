@@ -10,6 +10,7 @@
 
 #include <cstring>
 #include <vector>
+#include <random>
 using namespace std;
 
 void greedynaive(vector<vector<int> > dis,vector<vector<int> > nearnb, vector<int>* tour);

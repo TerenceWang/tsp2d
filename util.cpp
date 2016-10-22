@@ -5,8 +5,8 @@
 using namespace std;
 
 
-double dist(point a1,point a2){
-    double result=0;
+int dist(point a1,point a2){
+    int result=0;
     result=round(sqrt(pow(a1.x-a2.x,2)+pow(a1.y-a2.y,2)));
     return result;
 }
@@ -36,13 +36,14 @@ void calcnearneighbor(vector<vector<int> > &nearneibor, vector<vector<int> > &di
     }
 }
 
-double evellength(vector<vector<int> > dis,vector<int> tour){
-    double result=0.0;
+int evellength(vector<vector<int> > dis,vector<int> tour){
+    int result=0;
     int size=tour.size();
     for (int i = 0; i < size-1; ++i) {
         result+=dis[tour[i]][tour[i+1]];
     }
     result+=dis[tour[size-1]][tour[0]];
+
     return result;
 }
 void printtour(vector<int> tour){

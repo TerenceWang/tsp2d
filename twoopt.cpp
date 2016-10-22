@@ -4,11 +4,90 @@
 
 #include "twoopt.h"
 #include "util.h"
-#define TIME_LIMIT 1.8
-twoopt::twoopt(int size, vector<vector<int> > distance,vector<vector<int> > nearnb) {
+#define TIME_LIMIT 1.9
+#define MAXNB 25
+twoopt::twoopt(int size, vector<vector<int> > distance,vector<vector<int> > nearn) {
     pointnumber=size;
     dis=distance;
-    nearnb=nearnb;
+    nearnb=nearn;
+}
+void twoopt::doTwoOptHer(vector<int> *tour, double begin){
+
+    initpath();
+
+    int size = path.size();
+    index=vector<int>(size);
+    for (int i = 0; i < size; ++i) {
+        index[path[i]]=i;
+    }
+
+    int best_distance=evellength(dis,path);
+    newpath=path;
+    int count=0;
+    while ((clock()-begin)/CLOCKS_PER_SEC < TIME_LIMIT){
+        if(count>0)
+            exchangefornewpath();
+        count++;
+        bool change= true;
+        while (change) {
+            change=false;
+            for (int i = 0; i < size - 1; ++i) {
+                for (int j = 0; j < min(size, MAXNB); ++j) {
+                    int currentpoint = path[i];
+                    int currentpointnext = path[i + 1];
+                    int testpoint = nearnb[currentpoint][j];
+                    int testpointnext = path[(index[nearnb[currentpoint][j]] + 1) % size];
+                    if(currentpointnext==testpoint||currentpointnext==testpointnext)
+                        continue;
+                    if (dis[currentpoint][testpoint] + dis[currentpointnext][testpointnext] <
+                        dis[testpoint][testpointnext] + dis[currentpoint][currentpointnext]) {
+                        change=true;
+                        int indexdis = 0;
+                        int start = i + 1;
+                        int end = index[nearnb[currentpoint][j]];
+                        if (start < end)
+                            indexdis = end - start;
+                        else
+                            indexdis = end - start + size + 1;
+                        indexdis = (indexdis + 1) / 2;
+                        while (indexdis-- > 0) {
+                            start %= size;
+                            end = end == -1 ? size - 1 : end;
+                            swap(path[start++], path[end--]);
+                        }
+                        for (int k = 0; k < size; ++k) index[path[k]] = k;
+                    }
+                }
+            }
+        }
+        int distance=evellength(dis,path);
+        if(distance<best_distance){
+            best_distance=distance;
+            newpath=path;
+        }
+    }
+//    cout<<best_distance<<endl;
+//    cout<<"fin: "<< ((clock()-begin)/CLOCKS_PER_SEC)<<endl;
+    tour[0]=newpath;
+
+}
+void twoopt::exchangefornewpath() {
+    uniform_int_distribution<int> dist(2, pointnumber-3);
+    random_device rd;
+    int size=path.size();
+    if (size<5)
+        return;
+    else{
+        for (int i = 0; i < size/10; ++i) {
+            int pointid=dist(rd);
+            int a1=(pointid + 1)>=size?0:(pointid+1);
+            int a2=(pointid - 1)<0?size-1:(pointid-1);
+            swap(path[a1],path[a2]);
+            index[a1]=a2;
+            index[a2]=a1;
+        }
+    }
+
 }
 void twoopt::doTwoOpt(vector<int> *tour, double begin)
 {
@@ -78,6 +157,7 @@ void twoopt::initpath() {
         path.push_back(0);
         newpath.push_back(0);
     }
+
 //    std::random_device rd;
 //    mt19937 g(rd());
 //    shuffle(path.begin(),path.end(),g);

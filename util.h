@@ -10,13 +10,14 @@
 #include <cmath>
 #include <cstring>
 #include <vector>
+#include <algorithm>
 using namespace std;
 struct point {
     double x;
     double y;
 };
-double dist(point a1,point a2);
+int dist(point a1,point a2);
 void calcdistancem(vector<vector<int> > &dis,point s[], int size);
 void calcnearneighbor(vector<vector<int> > &nearneibor, vector<vector<int> > &dis);
-double evellength(vector<vector<int> > dis,vector<int> tour);
+int evellength(vector<vector<int> > dis,vector<int> tour);
 void printtour(vector<int> tour);

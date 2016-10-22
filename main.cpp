@@ -26,6 +26,8 @@ int main() {
     }
     calcdistancem(dis, s,pointnum);
     calcnearneighbor(nearnb,dis);
+
+
 //    for (int l = 0; l < pointnum; ++l) {
 //        cout<<nearnb[8][l]<<" "<<dis[8][nearnb[8][l]]<<endl;
 //    }
@@ -37,11 +39,11 @@ int main() {
 //    SAalg* sAalg=new SAalg(pointnum,dis,nearnb);
 //    sAalg[0].doSA(&tour);
 
-//    //greddy
+    //greddy
 //    greedynaive(dis,nearnb,&tour);
-//
-//    twoopt * twoopt1=new twoopt(pointnum,dis,nearnb);
-//    twoopt1->doTwoOpt(&tour,begin);
+
+    twoopt * twoopt1=new twoopt(pointnum,dis,nearnb);
+    twoopt1->doTwoOptHer(&tour,begin);
     printtour(tour);
     return 0;
 }
