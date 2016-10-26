@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <iostream>
 #include <random>
+#include <deque>
 using namespace std;
 
 
@@ -18,16 +19,16 @@ class SAalg {
 private:
     int pointnumber;
     vector<vector<int> >dis,nearnb;
-    vector<int> path;
-    vector<int> pathbest;
-    void copypath(vector<int> &v1, vector<int> &v2);
-    void exchangefornewpath(vector<int>& newpath, vector<int> &oldpath);
+    deque<int> path;
+    deque<int> pathbest;
+    void copypath(deque<int> &v1, deque<int> &v2);
+    void exchangefornewpath(deque<int>& newpath, deque<int> &oldpath);
 
 public:
 
     SAalg(int size,vector<vector<int> >distance,vector<vector<int> > nearnb);
     ~SAalg();
-    void doSA(vector<int> *tour);
+    void doSA(deque<int> *tour);
     void initpath();
 
 

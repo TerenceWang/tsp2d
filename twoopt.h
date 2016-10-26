@@ -9,6 +9,7 @@
 #include <iostream>
 #include <random>
 #include "Greedy.h"
+#include "grtdm.h"
 
 using namespace std;
 
@@ -19,14 +20,14 @@ private:
     void TwoOptSwap( const int& i, const int& k );
     int pointnumber;
     vector<vector<int> >dis,nearnb;
-
-    vector<int> path,newpath,index;
+    vector<double > pi;
+    deque<int> path,newpath,index;
 
 public:
-    twoopt(int size,vector<vector<int> >distance,vector<vector<int> >nearnb);
+    twoopt(int size,vector<vector<int> >distance,vector<vector<int> >nearnb,vector<double> pi);
     ~twoopt();
-    void doTwoOpt(vector<int> *tour, double begin);
-    void doTwoOptHer(vector<int> *tour, double begin);
+    void doTwoOpt(deque<int> *tour, double begin);
+    void doTwoOptHer(deque<int> *tour, double begin);
 };
 
 

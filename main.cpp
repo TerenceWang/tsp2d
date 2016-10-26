@@ -1,7 +1,8 @@
-#include "util.h"
 #include "Greedy.h"
 #include "SAalg.h"
 #include "twoopt.h"
+#include "irpbn.h"
+#include "grtdm.h"
 using namespace std;
 
 
@@ -10,10 +11,27 @@ int main() {
     int pointnum;
     cin>>pointnum;
     point s[pointnum];
+    point avg;
     for (int i = 0; i < pointnum; ++i) {
         cin>>s[i].x;
+        avg.x+=s[i].x;
         cin>>s[i].y;
+        avg.y+=s[i].y;
     }
+    avg.x/=pointnum;
+    avg.y/=pointnum;
+    vector <double >pi(pointnum);
+    vector <double >lengthtopi(pointnum);
+    double avglength=0.0;
+    for (int l = 0; l < pointnum; ++l) {
+        lengthtopi[l]=dist(s[l],avg);
+        avglength+=lengthtopi[l];
+    }
+    avglength/=pointnum;
+    for (int i = 0; i < pointnum; ++i) {
+        pi[i]=0.7*(lengthtopi[i]-avglength);
+    }
+
     vector<vector<int> > dis,nearnb;
     vector<int> temp=vector<int>(pointnum ,-1);
     dis = vector<vector<int> >(pointnum, vector<int>(pointnum, -1));
@@ -25,13 +43,14 @@ int main() {
         nearnb.push_back(tt);
     }
     calcdistancem(dis, s,pointnum);
-    calcnearneighbor(nearnb,dis);
 
+    calcnearneighbor(nearnb,dis);
 
 //    for (int l = 0; l < pointnum; ++l) {
 //        cout<<nearnb[8][l]<<" "<<dis[8][nearnb[8][l]]<<endl;
 //    }
-    vector <int>tour(pointnum, 0);
+    deque <int>tour(pointnum);
+//    greedytdm(dis,nearnb,pi,&tour);
 
     //read fin
 
@@ -41,9 +60,26 @@ int main() {
 
     //greddy
 //    greedynaive(dis,nearnb,&tour);
+//    cout<<evellength(dis,tour)<<endl;
 
-    twoopt * twoopt1=new twoopt(pointnum,dis,nearnb);
-    twoopt1->doTwoOptHer(&tour,begin);
+//    neighborinsertoptimal(dis,nearnb,&tour);
+//
+//    twoopt * twoopt1=new twoopt(pointnum,dis,nearnb,pi);
+//    twoopt1->doTwoOptHer(&tour,begin);
+//
+    greedytdm(dis,nearnb,pi,&tour);
+    for(int i =0 ;i<pointnum;i++){
+        if(tour[i]==-1)
+            cout<<"errrrr2"<<endl;
+        for (int j = 0; j < pointnum; ++j) {
+            if(i==j)
+                continue;
+            if(tour[i]==tour[j])
+                cout<<"errrr!!!!!"<<endl;
+        }
+    }
+    cout<<evellength(dis,tour)<<endl;
+    cout<<tour.size()<<endl;
     printtour(tour);
     return 0;
 }

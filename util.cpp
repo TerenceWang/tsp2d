@@ -33,10 +33,11 @@ void calcnearneighbor(vector<vector<int> > &nearneibor, vector<vector<int> > &di
         sort(nearneibor[i].begin(),nearneibor[i].end(),[&i,&dis](const int &a, const int &b)->bool{
             return dis[i][a] < dis[i][b];
         });
+
     }
 }
 
-int evellength(vector<vector<int> > dis,vector<int> tour){
+int evellength(vector<vector<int> > dis,deque<int> tour){
     int result=0;
     int size=tour.size();
     for (int i = 0; i < size-1; ++i) {
@@ -46,7 +47,7 @@ int evellength(vector<vector<int> > dis,vector<int> tour){
 
     return result;
 }
-void printtour(vector<int> tour){
+void printtour(deque<int> tour){
     for (auto i : tour) {
         cout<<i<<endl;
     }

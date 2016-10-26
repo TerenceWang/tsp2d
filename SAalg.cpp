@@ -12,7 +12,7 @@ SAalg::SAalg(int size, vector<vector<int> > distance,vector<vector<int> > nearnb
     dis = distance;
     nearnb=nearnb;
 }
-void SAalg::doSA(vector<int> *tour) {
+void SAalg::doSA(deque<int> *tour) {
     initpath();
     copypath(pathbest,path);
 
@@ -24,7 +24,7 @@ void SAalg::doSA(vector<int> *tour) {
     double T=5;
     double N=5;
     double a=0.98;
-    vector<int> pathtemp(0,pointnumber);
+    deque<int> pathtemp(0,pointnumber);
 
     int k = 0; //current sa times
     int n = 0;// iter step
@@ -56,7 +56,7 @@ void SAalg::doSA(vector<int> *tour) {
     tour[0]=pathbest;
 }
 
-void SAalg::exchangefornewpath(vector<int> &newpath,vector<int> &oldpath) {
+void SAalg::exchangefornewpath(deque<int> &newpath,deque<int> &oldpath) {
 //    newpath.assign(oldpath.begin(),oldpath.end());
     newpath=oldpath;
     uniform_int_distribution<int> dist(0, pointnumber-1);
@@ -84,7 +84,7 @@ void SAalg::initpath() {
 
 
 
-void SAalg::copypath(vector<int> &v1, vector<int> &v2){
+void SAalg::copypath(deque<int> &v1, deque<int> &v2){
 //    v1.assign(v2.begin(),v2.end());
     v1=v2;
 }

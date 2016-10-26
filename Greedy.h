@@ -11,9 +11,11 @@
 #include <cstring>
 #include <vector>
 #include <random>
+#include <deque>
+#include <algorithm>
 using namespace std;
 
-void greedynaive(vector<vector<int> > dis,vector<vector<int> > nearnb, vector<int>* tour);
+void greedynaive(vector<vector<int> > dis,vector<vector<int> > nearnb, deque<int>* tour);
 
 
 #endif //TSP2D_GREEDY_H

@@ -5,7 +5,7 @@
 #include "Greedy.h"
 
 
-void greedynaive(vector<vector<int> >dis,vector<vector<int> >nearnb, vector<int> *tour) {
+void greedynaive(vector<vector<int> >dis,vector<vector<int> >nearnb, deque<int> *tour) {
 
     int size=tour[0].size();
     int used[size];
@@ -13,8 +13,8 @@ void greedynaive(vector<vector<int> >dis,vector<vector<int> >nearnb, vector<int>
     memset(used,0,size*sizeof(int));
     uniform_int_distribution<int> dist(0, size-1);
     random_device rd;
-    int startpoint=dist(rd);
-//    int startpoint = 0;
+//    int startpoint=dist(rd);
+    int startpoint = 0;
     tour[0][0]=startpoint;
     used[startpoint]=1;
 
