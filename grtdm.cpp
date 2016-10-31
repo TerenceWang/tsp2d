@@ -37,10 +37,10 @@ void greedytdm(vector<vector<int> > dis,vector< vector<int> > nearnb, vector<dou
 //        cout<<heap.size()<<endl;
         heap.pop_back();
 //        cout<<heap.size()<<endl;
-        if (degree[e.i] == 2||degree[e.j]==2||tail[e.i]==e.j || tail[e.j] == e.i) {
-            if(degree[e.i]==2)
+        if (degree[e.i] >= 2||degree[e.j]>=2||tail[e.i]==e.j) {
+            if(degree[e.i]>=2)
                 continue;
-             else if (degree[e.j] == 2 || tail[e.i] == e.j || tail[e.j] == e.i) {
+             else if (degree[e.j] >= 2 || tail[e.i] == e.j ) {
                 edge temp;
                 temp.i = e.i;
                 temp.index = e.index + 1;
@@ -76,6 +76,9 @@ void greedytdm(vector<vector<int> > dis,vector< vector<int> > nearnb, vector<dou
             if(edgestore[e.j][0]==-1){
                 edgestore[e.j][0]=e.i;
             } else{
+//                if(edgestore[e.j][1]!=-1){
+//                    cout<<"errr";
+//                }
                 edgestore[e.j][1]=e.i;
             }
             degree[e.i]+=1;
@@ -101,9 +104,7 @@ void greedytdm(vector<vector<int> > dis,vector< vector<int> > nearnb, vector<dou
             }
 //            cout << "TAIL " << tail[e.i] << " " << tail[e.j] << endl;
             if(edgesize<size-1){
-                if(degree[e.i]==2)
-                    continue;
-                else{
+                if(degree[e.i]==1){
                     edge temp;
                     temp.i = e.i;
                     temp.index = e.index + 1;
@@ -118,7 +119,8 @@ void greedytdm(vector<vector<int> > dis,vector< vector<int> > nearnb, vector<dou
                     });
 
                     continue;
-                }
+                } else
+                    continue;
             }else{
                 continue;
             }
