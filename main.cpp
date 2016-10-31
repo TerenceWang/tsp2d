@@ -50,7 +50,7 @@ int main() {
 //        cout<<nearnb[8][l]<<" "<<dis[8][nearnb[8][l]]<<endl;
 //    }
     deque <int>tour(pointnum);
-    greedytdm(dis,nearnb,pi,&tour);
+//    greedytdm(dis,nearnb,pi,&tour);
 
     //read fin
 
@@ -64,22 +64,22 @@ int main() {
 
 //    neighborinsertoptimal(dis,nearnb,&tour);
 //
-//    twoopt * twoopt1=new twoopt(pointnum,dis,nearnb,pi);
-//    twoopt1->doTwoOptHer(&tour,begin);
+    twoopt * twoopt1=new twoopt(pointnum,dis,nearnb,pi);
+    twoopt1->doTwoOptHer(&tour,begin);
 
-    deque<int> tmp;
-    tmp=tour;
-    sort(tmp.begin(),tmp.end());
-    bool flag= false;
-    for (int i = 0; i < pointnum; ++i) {
-        if(tmp[i]!=i) {
-            flag = true;
-            break;
-        }
-    }
-    if(flag) {
-        greedynaive(dis,nearnb,&tour);
-    }
+//    deque<int> tmp;
+//    tmp=tour;
+//    sort(tmp.begin(),tmp.end());
+//    bool flag= false;
+//    for (int i = 0; i < pointnum; ++i) {
+//        if(tmp[i]!=i) {
+//            flag = true;
+//            break;
+//        }
+//    }
+//    if(flag) {
+//        greedynaive(dis,nearnb,&tour);
+//    }
     printtour(tour);
 //    cout<<evellength(dis,tour)<<endl;
 

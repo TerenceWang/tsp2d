@@ -17,9 +17,13 @@ void greedytdm(vector<vector<int> > dis,vector< vector<int> > nearnb, vector<dou
         degree[i]=0;
         tail[i]=-1;
         edge temp;
+        temp.index=0;
         temp.i=i;
-        temp.j=nearnb[i][1];
-        temp.index=1;
+        temp.j=nearnb[i][temp.index];
+        if(temp.i==temp.j){
+            temp.index=temp.index+1;
+            temp.j=nearnb[i][temp.index];
+        }
         temp.length=dis[i][nearnb[i][1]]-pi[temp.i]-pi[temp.j];
         heap.push_back(temp);
     }
@@ -49,6 +53,11 @@ void greedytdm(vector<vector<int> > dis,vector< vector<int> > nearnb, vector<dou
 //                }
 
                 temp.j = nearnb[temp.i][temp.index];
+                if(temp.i==temp.j){
+                    temp.index=temp.index+1;
+                    temp.j = nearnb[temp.i][temp.index];
+                }
+
                 temp.length = dis[temp.i][temp.j] - pi[temp.i] - pi[temp.j];
 //                for(vector<edge>::iterator it = heap.begin(); it != heap.end(); it++)
 //                    cout << it->i << " " << it->j << " " << it->length << endl;
@@ -61,7 +70,10 @@ void greedytdm(vector<vector<int> > dis,vector< vector<int> > nearnb, vector<dou
 //                    cout << it->i << " " << it->j << " " << it->length << endl;
                 continue;
             }
+            continue;
         }else{
+            if(e.i==e.j)
+                cout<<"caonima";
 //            cout << "ADD " << e.i << " " << e.j << endl;
             edgesize++;
             if(edgestore[e.i][0]==-1){
@@ -112,12 +124,15 @@ void greedytdm(vector<vector<int> > dis,vector< vector<int> > nearnb, vector<dou
 //                        temp.index++;
 //                    }
                     temp.j = nearnb[temp.i][temp.index];
+                    if(temp.i==temp.j){
+                        temp.index=temp.index+1;
+                        temp.j = nearnb[temp.i][temp.index];
+                    }
                     temp.length = dis[temp.i][temp.j] - pi[temp.i] - pi[temp.j];
                     heap.push_back(temp);
                     push_heap(heap.begin(), heap.end(), [](const edge &a, const edge &b) -> bool {
                         return a.length >= b.length;
                     });
-
                     continue;
                 } else
                     continue;

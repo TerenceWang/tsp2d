@@ -6,7 +6,7 @@
 #include "irpbn.h"
 
 #define TIME_LIMIT 1.98
-#define MAXNB 15
+#define MAXNB 20
 twoopt::twoopt(int size, vector<vector<int> > distance,vector<vector<int> > nearn,vector<double > pii) {
     pointnumber=size;
     dis=distance;
@@ -174,19 +174,19 @@ void twoopt::initpath() {
 //    shuffle(path.begin(),path.end(),g);
 //    neighborinsertoptimal(dis,nearnb,&path);
     greedytdm(dis,nearnb,pi,&path);
-    temp=path;
-    sort(temp.begin(),temp.end());
-    bool flag= false;
-    for (int i = 0; i < pointnumber; ++i) {
-        if(temp[i]!=i) {
-            flag = true;
-            break;
-        }
-    }
-    if(flag) {
-        deque<int> s=deque<int>(pointnumber,0);
-        greedynaive(dis, nearnb, &s);
-        path=s;
-    }
+//    temp=path;
+//    sort(temp.begin(),temp.end());
+//    bool flag= false;
+//    for (int i = 0; i < pointnumber; ++i) {
+//        if(temp[i]!=i) {
+//            flag = true;
+//            break;
+//        }
+//    }
+//    if(flag) {
+//        deque<int> s=deque<int>(pointnumber,0);
+//        greedynaive(dis, nearnb, &s);
+//        path=s;
+//    }
 //    greedynaive(dis,nearnb,&path);
 }
