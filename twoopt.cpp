@@ -165,6 +165,8 @@ void twoopt::initpath() {
 //        newpath.push_back(0);
 //    }
     path=deque<int>(pointnumber,0);
+
+    deque<int> temp;
     newpath=deque<int>(pointnumber,0);
 
 //    std::random_device rd;
@@ -172,5 +174,19 @@ void twoopt::initpath() {
 //    shuffle(path.begin(),path.end(),g);
 //    neighborinsertoptimal(dis,nearnb,&path);
     greedytdm(dis,nearnb,pi,&path);
+    temp=path;
+    sort(temp.begin(),temp.end());
+    bool flag= false;
+    for (int i = 0; i < pointnumber; ++i) {
+        if(temp[i]!=i) {
+            flag = true;
+            break;
+        }
+    }
+    if(flag) {
+        deque<int> s=deque<int>(pointnumber,0);
+        greedynaive(dis, nearnb, &s);
+        path=s;
+    }
 //    greedynaive(dis,nearnb,&path);
 }

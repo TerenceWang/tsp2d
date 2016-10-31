@@ -48,7 +48,7 @@ int evellength(vector<vector<int> > dis,deque<int> tour){
     return result;
 }
 void printtour(deque<int> tour){
-    for (auto i : tour) {
-        cout<<i<<endl;
-    }
+        for (auto i : tour) {
+            cout << i << endl;
+        }
 }

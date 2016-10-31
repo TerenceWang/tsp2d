@@ -29,7 +29,7 @@ int main() {
     }
     avglength/=pointnum;
     for (int i = 0; i < pointnum; ++i) {
-        pi[i]=0.7*(lengthtopi[i]-avglength);
+        pi[i]=0.8*(lengthtopi[i]-avglength);
     }
 
     vector<vector<int> > dis,nearnb;
@@ -64,22 +64,23 @@ int main() {
 
 //    neighborinsertoptimal(dis,nearnb,&tour);
 //
-//    twoopt * twoopt1=new twoopt(pointnum,dis,nearnb,pi);
-//    twoopt1->doTwoOptHer(&tour,begin);
+    twoopt * twoopt1=new twoopt(pointnum,dis,nearnb,pi);
+    twoopt1->doTwoOptHer(&tour,begin);
 //
-    greedytdm(dis,nearnb,pi,&tour);
-    for(int i =0 ;i<pointnum;i++){
-        if(tour[i]==-1)
-            cout<<"errrrr2"<<endl;
-        for (int j = 0; j < pointnum; ++j) {
-            if(i==j)
-                continue;
-            if(tour[i]==tour[j])
-                cout<<"errrr!!!!!"<<endl;
-        }
-    }
+//    greedytdm(dis,nearnb,pi,&tour);
+//    tour3=tour;
+//    sort(tour3.begin(),tour3.end());
+//    bool flag=false;
+//    for(int i =0 ;i<pointnum;i++){
+//        if(tour3[i]!=i)
+//           flag=true;
+//    }
+//    if(flag) {
+//        greedynaive(dis, nearnb, &tour2);
+//        printtour(tour2);
+//        return 0;
+//    }
+//    printtour(tour);
     cout<<evellength(dis,tour)<<endl;
-    cout<<tour.size()<<endl;
-    printtour(tour);
-    return 0;
+
 }
