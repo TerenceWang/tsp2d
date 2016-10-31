@@ -5,8 +5,8 @@
 #include "twoopt.h"
 #include "irpbn.h"
 
-#define TIME_LIMIT 1.95
-#define MAXNB 25
+#define TIME_LIMIT 1.98
+#define MAXNB 15
 twoopt::twoopt(int size, vector<vector<int> > distance,vector<vector<int> > nearn,vector<double > pii) {
     pointnumber=size;
     dis=distance;
@@ -82,7 +82,7 @@ void twoopt::doTwoOptHer(deque<int> *tour, double begin){
 void twoopt::exchangefornewpath() {
 
     int size=path.size();
-    if (size<5)
+    if (size<8)
         return;
     static uniform_int_distribution<int> dist(2, size-3);
     static random_device rd;
@@ -91,8 +91,8 @@ void twoopt::exchangefornewpath() {
         int a1=(pointid + 1)>=size?0:(pointid+1);
         int a2=(pointid - 1)<0?size-1:(pointid-1);
         swap(path[a1],path[a2]);
-        index[a1]=a2;
-        index[a2]=a1;
+        index[a1]=a1;
+        index[a2]=a2;
     }
 
 }

@@ -24,13 +24,13 @@ void greedytdm(vector<vector<int> > dis,vector< vector<int> > nearnb, vector<dou
         heap.push_back(temp);
     }
     make_heap(heap.begin(),heap.end(),[](const edge &a, const edge &b)->bool{
-        return a.length>b.length;
+        return a.length>=b.length;
     });
     int edgesize=0;
     while(edgesize<size-1) {
         edge e = heap.front();
         pop_heap(heap.begin(), heap.end(), [](const edge &a, const edge &b) -> bool {
-            return a.length > b.length;
+            return a.length >= b.length;
         });
 
 //        cout << " 111 " << e.i << " " << e.j << endl;
@@ -55,7 +55,7 @@ void greedytdm(vector<vector<int> > dis,vector< vector<int> > nearnb, vector<dou
                 heap.push_back(temp);
 //                cout << " temp " << temp.i << " " << temp.j << endl;
                 push_heap(heap.begin(), heap.end(), [](const edge &a, const edge &b) -> bool {
-                    return a.length > b.length;
+                    return a.length >= b.length;
                 });
 //                for(vector<edge>::iterator it = heap.begin(); it != heap.end(); it++)
 //                    cout << it->i << " " << it->j << " " << it->length << endl;
@@ -67,7 +67,11 @@ void greedytdm(vector<vector<int> > dis,vector< vector<int> > nearnb, vector<dou
             if(edgestore[e.i][0]==-1){
                 edgestore[e.i][0]=e.j;
             }else{
+                if(edgestore[e.i][1]!=-1){
+                    cout<<"errr";
+                }
                 edgestore[e.i][1]=e.j;
+
             }
             if(edgestore[e.j][0]==-1){
                 edgestore[e.j][0]=e.i;
@@ -110,7 +114,7 @@ void greedytdm(vector<vector<int> > dis,vector< vector<int> > nearnb, vector<dou
                     temp.length = dis[temp.i][temp.j] - pi[temp.i] - pi[temp.j];
                     heap.push_back(temp);
                     push_heap(heap.begin(), heap.end(), [](const edge &a, const edge &b) -> bool {
-                        return a.length > b.length;
+                        return a.length >= b.length;
                     });
 
                     continue;
@@ -120,6 +124,7 @@ void greedytdm(vector<vector<int> > dis,vector< vector<int> > nearnb, vector<dou
             }
         }
     }
+
     int startpoint=0;
     for (int j = 0; j < size; ++j) {
         if(edgestore[j][0]==-1||edgestore[j][1]==-1) {
@@ -127,21 +132,25 @@ void greedytdm(vector<vector<int> > dis,vector< vector<int> > nearnb, vector<dou
             break;
         }
     }
-    tour[0].clear();
+//    tour[0].clear();
+    deque<int> tourr(size,0);
     used[startpoint]=1;
-    tour[0].push_back(startpoint);
+//    tour[0].push_back(startpoint);
+    tourr[0]=startpoint;
     int lastpoint=startpoint;
     for (int k = 1; k < size; ++k) {
         if(edgestore[lastpoint][0]!=-1) {
             if (used[edgestore[lastpoint][0]] == 0) {
-                tour[0].push_back(edgestore[lastpoint][0]);
+                tourr[k]=edgestore[lastpoint][0];
+//                tour[0].push_back(edgestore[lastpoint][0]);
                 lastpoint = edgestore[lastpoint][0];
                 used[lastpoint] = 1;
             }
             else {
                 if(edgestore[lastpoint][1]!=-1){
                     if (used[edgestore[lastpoint][1]] == 0) {
-                        tour[0].push_back(edgestore[lastpoint][1]);
+//                        tour[0].push_back(edgestore[lastpoint][1]);
+                        tourr[k]=edgestore[lastpoint][1];
                         lastpoint = edgestore[lastpoint][1];
                         used[lastpoint] = 1;
                     }
@@ -149,6 +158,7 @@ void greedytdm(vector<vector<int> > dis,vector< vector<int> > nearnb, vector<dou
             }
         }
     }
+    tour[0]=tourr;
 //    vector<edge>::iterator iter;
 //    for (int j = 0; j < size; ++j) {
 //        pop_heap(heap.begin(),heap.end(),[](const edge &a, const edge &b)->bool{

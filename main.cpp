@@ -29,7 +29,7 @@ int main() {
     }
     avglength/=pointnum;
     for (int i = 0; i < pointnum; ++i) {
-        pi[i]=0.8*(lengthtopi[i]-avglength);
+        pi[i]=0.5*(lengthtopi[i]-avglength);
     }
 
     vector<vector<int> > dis,nearnb;
@@ -66,21 +66,21 @@ int main() {
 //
     twoopt * twoopt1=new twoopt(pointnum,dis,nearnb,pi);
     twoopt1->doTwoOptHer(&tour,begin);
-//
-//    greedytdm(dis,nearnb,pi,&tour);
-//    tour3=tour;
-//    sort(tour3.begin(),tour3.end());
-//    bool flag=false;
-//    for(int i =0 ;i<pointnum;i++){
-//        if(tour3[i]!=i)
-//           flag=true;
+
+//    deque<int> tmp;
+//    tmp=tour;
+//    sort(tmp.begin(),tmp.end());
+//    bool flag= false;
+//    for (int i = 0; i < pointnum; ++i) {
+//        if(tmp[i]!=i) {
+//            flag = true;
+//            break;
+//        }
 //    }
 //    if(flag) {
-//        greedynaive(dis, nearnb, &tour2);
-//        printtour(tour2);
-//        return 0;
+//        cout<<"errr"<<endl;
 //    }
-//    printtour(tour);
-    cout<<evellength(dis,tour)<<endl;
+    printtour(tour);
+//    cout<<evellength(dis,tour)<<endl;
 
 }
