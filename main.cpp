@@ -3,6 +3,7 @@
 #include "twoopt.h"
 #include "irpbn.h"
 #include "grtdm.h"
+#include "time.h"
 using namespace std;
 
 
@@ -29,7 +30,7 @@ int main() {
     }
     avglength/=pointnum;
     for (int i = 0; i < pointnum; ++i) {
-        pi[i]=0.5*(lengthtopi[i]-avglength);
+        pi[i]=0.7*(lengthtopi[i]-avglength);
     }
 
     vector<vector<int> > dis,nearnb;
@@ -65,7 +66,7 @@ int main() {
 //    neighborinsertoptimal(dis,nearnb,&tour);
 //
     twoopt * twoopt1=new twoopt(pointnum,dis,nearnb,pi);
-    twoopt1->doTwoOptHer(&tour,begin);
+    twoopt1->doTwoHalfOptHer(&tour,begin);
 
 //    deque<int> tmp;
 //    tmp=tour;
@@ -78,7 +79,7 @@ int main() {
 //        }
 //    }
 //    if(flag) {
-//        greedynaive(dis,nearnb,&tour);
+//        cout<<"errr"<<endl;
 //    }
     printtour(tour);
 //    cout<<evellength(dis,tour)<<endl;
