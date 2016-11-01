@@ -6,7 +6,7 @@
 #include "irpbn.h"
 
 #define TIME_LIMIT 1.98
-#define MAXNB 20
+#define MAXNB 30
 twoopt::twoopt(int size, vector<vector<int> > distance,vector<vector<int> > nearn,vector<double > pii) {
     pointnumber=size;
     dis=distance;
@@ -74,7 +74,7 @@ void twoopt::doTwoOptHer(deque<int> *tour, double begin){
             newpath=path;
         }
     }
-//    cout<<count<<endl;
+    cout<<count<<endl;
 //    cout<<"fin: "<< ((clock()-begin)/CLOCKS_PER_SEC)<<endl;
     tour[0]=newpath;
 
@@ -86,7 +86,7 @@ void twoopt::exchangefornewpath() {
         return;
     static uniform_int_distribution<int> dist(2, size-3);
     static random_device rd;
-    for (int i = 0; i < size/10; ++i) {
+    for (int i = 0; i <60; ++i) {
         int pointid=dist(rd);
         int a1=(pointid + 1)>=size?0:(pointid+1);
         int a2=(pointid - 1)<0?size-1:(pointid-1);

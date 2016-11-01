@@ -80,7 +80,7 @@ int main() {
 //    if(flag) {
 //        greedynaive(dis,nearnb,&tour);
 //    }
-    printtour(tour);
+//    printtour(tour);
 //    cout<<evellength(dis,tour)<<endl;
 
 }
