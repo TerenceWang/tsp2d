@@ -28,6 +28,7 @@ public:
     ~twoopt();
     void doTwoOpt(deque<int> *tour, double begin);
     void doTwoOptHer(deque<int> *tour, double begin);
+    void doTwoHalfOptHer(deque<int> *tour, double begin);
 };
 
 

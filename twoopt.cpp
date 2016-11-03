@@ -2,12 +2,13 @@
 // Created by Terence on 10/21/16.
 //
 
+#include <list>
 #include "twoopt.h"
 #include "irpbn.h"
 #include "time.h"
 
-#define TIME_LIMIT 1.85
-#define MAXNB 50
+#define TIME_LIMIT 1.95
+#define MAXNB 20
 twoopt::twoopt(int size, vector<vector<int> > distance,vector<vector<int> > nearn,vector<double > pii) {
     pointnumber=size;
     dis=distance;
@@ -24,6 +25,7 @@ void twoopt::doTwoHalfOptHer(deque<int> *tour, double begin){
     for (int i = 0; i < size; ++i) {
         index[path[i]]=i;
     }
+    list<int> paths(size);
 
     int best_distance=evellength(dis,path);
     newpath=path;
@@ -31,6 +33,12 @@ void twoopt::doTwoHalfOptHer(deque<int> *tour, double begin){
     int minsize=min(size, MAXNB);
 
     while (double(clock()-begin)/CLOCKS_PER_SEC < TIME_LIMIT){
+        int s=0;
+        for (list<int>::iterator a=paths.begin();a!=paths.end();a++) {
+            *a=path[s];
+            s++;
+        }
+
         if(count>0) {
             exchangefornewpath();
         }
@@ -39,66 +47,40 @@ void twoopt::doTwoHalfOptHer(deque<int> *tour, double begin){
 
         while (change && double(clock()-begin)/CLOCKS_PER_SEC < TIME_LIMIT) {
             change=false;
-            for (int i = 0; i < size - 1; ++i) {
+            for (int i = 0; i < size - 2; ++i) {
                 for (int j = 0; j < minsize; ++j) {
-                    int currentpoint = path[i];
-                    int currentpointnext = path[i + 1];
-                    int currentpointnext2 = path[i + 2];
-                    int testpoint = nearnb[currentpoint][j];
-                    int testpointnext = path[(index[nearnb[currentpoint][j]] + 1) % size];
-                    int testpointnext2 = path[(index[nearnb[currentpoint][j]] + 2) % size];
+                    int a = path[i];
+                    int b = path[i + 1];
+                    int c = path[i + 2];
+                    int d = nearnb[a][j];
+                    int e = path[(index[nearnb[a][j]] + 1) % size];
+                    list<int>::iterator ai,bi,ci,di,ei;
 
-                    double opt1_cur = dis[currentpoint][currentpointnext] + dis[currentpoint][currentpointnext2] + dis[testpoint][testpointnext];
+                    if(d ==a||d==b||d==c||e==a||e==b||e==c)
+                        continue;
 
-                    double opt2_cur = dis[currentpoint][currentpointnext] + dis[testpointnext][testpointnext2] + dis[testpoint][testpointnext];
+                    int distance=(dis[a][b]+dis[b][c]+dis[d][e])-(dis[a][c]+dis[b][d]+dis[b][e]);
 
-                    double opt1 = dis[currentpoint][currentpointnext2] + dis[testpoint][currentpointnext] + dis[currentpointnext][testpointnext];
-
-                    double opt2 = dis[currentpoint][testpointnext] + dis[testpointnext][currentpointnext] + dis[testpointnext2][testpoint];
+                    if(distance>0){
+                        int ss=0;
+                        for (list<int>::iterator k=paths.begin();k!=paths.end();k++) {
+                            if (path[ss]==b) bi=k;
+                            if (path[ss]==e) ei=k;
+                            ss++;
+                        }
+                        paths.erase(bi);
+                        paths.insert(ei,b);
+                        change=true;
+                        int temp=0;
+                        for (list<int>::iterator a=paths.begin();a!=paths.end();a++) {
+                            path[temp]=*a;
+                            index[path[temp]] = temp;
+                            temp++;
+                        }
+                    }
 
 //                    if(currentpointnext==testpoint||currentpointnext==testpointnext)
 //                        continue;
-                    if (opt1 < opt1_cur) {
-                        change=true;
-                        int indexdis = 0;
-                        int start = i + 1;
-                        int end = index[nearnb[currentpoint][j]];
-                        if (start < end)
-                            indexdis = end - start;
-                        else
-                            indexdis = end - start + size + 1;
-                        indexdis = (indexdis + 1) / 2;
-                        while (indexdis-- > 0) {
-                            start %= size;
-                            end = end == -1 ? size - 1 : end;
-                            swap(path[start], path[end]);
-                            start++;
-                            end--;
-                        }
-                        for (int k = 0; k < size; ++k) index[path[k]] = k;
-                    }
-
-                    if (opt2 < opt2_cur){
-                        change=true;
-                        int indexdis = 0;
-                        int start = (index[nearnb[currentpoint][j]] + 1) % size;
-                        int end = index[i];
-                        if (start < end)
-                            indexdis = end - start;
-                        else
-                            indexdis = end - start + size + 1;
-                        indexdis = (indexdis + 1) / 2;
-                        while (indexdis-- > 0) {
-                            start %= size;
-                            end = end == -1 ? size - 1 : end;
-                            swap(path[start], path[end]);
-                            start++;
-                            end--;
-                        }
-                        for (int k = 0; k < size; ++k) index[path[k]] = k;
-                    }
-
-
                 }
             }
         }
@@ -187,7 +169,7 @@ void twoopt::exchangefornewpath() {
         return;
     static uniform_int_distribution<int> dist(2, size-3);
     static random_device rd;
-    for (int i = 0; i < size/10; ++i) {
+    for (int i = 0; i < size/20; ++i) {
         int pointid=dist(rd);
         int a1=(pointid + 1)>=size?0:(pointid+1);
         int a2=(pointid - 1)<0?size-1:(pointid-1);
@@ -290,4 +272,5 @@ void twoopt::initpath() {
 //        path=s;
 //    }
 //    greedynaive(dis,nearnb,&path);
+//    cout<<evellength(dis,path)<<endl;
 }

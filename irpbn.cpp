@@ -62,9 +62,6 @@ void neighborinsertoptimal(vector<vector<int> >dis,vector<vector<int> >nearnb, d
             tour.insert(tour.end(),point);
         }
 
-
-
-
         k++;
     }
     tourr[0].clear();

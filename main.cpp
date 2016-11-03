@@ -79,6 +79,7 @@ int main() {
 //        }
 //    }
 //    if(flag) {
+//        cout<<"errr"<<endl;
 //        greedynaive(dis,nearnb,&tour);
 //    }
     printtour(tour);
