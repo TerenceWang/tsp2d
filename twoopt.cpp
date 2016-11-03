@@ -33,14 +33,16 @@ void twoopt::doTwoHalfOptHer(deque<int> *tour, double begin){
     int minsize=min(size, MAXNB);
 
     while (double(clock()-begin)/CLOCKS_PER_SEC < TIME_LIMIT){
+
+
+        if(count>0) {
+            exchangefornewpath();
+        }
+
         int s=0;
         for (list<int>::iterator a=paths.begin();a!=paths.end();a++) {
             *a=path[s];
             s++;
-        }
-
-        if(count>0) {
-            exchangefornewpath();
         }
         count++;
         bool change= true;
@@ -72,8 +74,8 @@ void twoopt::doTwoHalfOptHer(deque<int> *tour, double begin){
                         paths.insert(ei,b);
                         change=true;
                         int temp=0;
-                        for (list<int>::iterator a=paths.begin();a!=paths.end();a++) {
-                            path[temp]=*a;
+                        for (list<int>::iterator k=paths.begin();k!=paths.end();k++) {
+                            path[temp]=*k;
                             index[path[temp]] = temp;
                             temp++;
                         }

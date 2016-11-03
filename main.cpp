@@ -74,13 +74,15 @@ int main() {
 //    bool flag= false;
 //    for (int i = 0; i < pointnum; ++i) {
 //        if(tmp[i]!=i) {
+//            if(tmp[i]==tmp[i-1])
+//                cout<<"errr"<<endl;
 //            flag = true;
 //            break;
 //        }
 //    }
 //    if(flag) {
 //        cout<<"errr"<<endl;
-//        greedynaive(dis,nearnb,&tour);
+//        greedytdm(dis,nearnb,pi,&tour);
 //    }
     printtour(tour);
 //    cout<<evellength(dis,tour)<<endl;
